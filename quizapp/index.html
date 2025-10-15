@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Challenge</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f2fe;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .quiz-box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #1e40af;
+    }
+    .timer {
+      font-weight: bold;
+      color: #dc2626;
+    }
+    input {
+      padding: 8px;
+      width: 70%;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+
+<body ng-controller="QuizCtrl">
+  <h2> Quick Quiz</h2>
+
+  <div ng-if="!quizStarted && !quizFinished" class="quiz-box">
+    <h3>Enter your name to start</h3>
+    <input ng-model="playerName" placeholder="Enter your name here..." required>
+    <br><br>
+    <button ng-click="startQuiz()">Start Quiz</button>
+  </div>
+
+  <div ng-if="quizStarted && !quizFinished" class="quiz-box">
+    <h3>Question {{currentIndex + 1}} / {{questions.length}}</h3>
+    <p><strong>{{currentQuestion.question}}</strong></p>
+
+    <div ng-repeat="opt in currentQuestion.options">
+      <label>
+        <input type="radio" ng-model="selectedAnswer" ng-value="opt"> {{opt}}
+      </label>
+    </div>
+
+    <p class="timer"> Time left: {{timer}} seconds</p>
+
+    <button ng-click="nextQuestion()">Next</button>
+  </div>
+
+  <div ng-if="quizFinished" class="quiz-box">
+    <h3> Quiz Completed!</h3>
+    <p><strong>{{playerName}}</strong>, your final score is:</p>
+    <h2>{{score}} / {{questions.length}}</h2>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+if _name_ == "_main_":
+    test = TestUntitled()
+    test.setup_method(test.test_untitled)
+    test.test_untitled()
+    test.teardown_method(test.test_untitled)
+
+---
+npm init -y
+npm i express mongoose cors
+npm i express mongoose cors body-parser
+node server.js

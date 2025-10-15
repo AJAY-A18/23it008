@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ticketApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Movie Ticket Booking</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f2fe;
+      margin: 0;
+      padding: 20px;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #1e40af;
+    }
+    form, table {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 650px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #2563eb;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover { background-color: #1e3a8a; }
+    table {
+      width: 95%;
+      border-collapse: collapse;
+      text-align: center;
+    }
+    th, td { border: 1px solid #ccc; padding: 8px; }
+    th { background-color: #1e3a8a; color: white; }
+    .seat {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 1px solid #2563eb;
+      margin: 3px;
+      line-height: 30px;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 4px;
+      background-color: #fff;
+    }
+    .seat.selected {
+      background-color: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+
+<body ng-controller="MainCtrl">
+
+  <h2>🎬 Movie Ticket Booking System</h2>
+
+  <form ng-submit="saveBooking()">
+    <input ng-model="booking.name" placeholder="Your Name" required>
+    <input ng-model="booking.email" placeholder="Email" type="email" required>
+    <select ng-model="booking.movie" required>
+      <option value="">Select Movie</option>
+      <option>Leo</option>
+      <option>Jailer</option>
+      <option>Beast</option>
+      <option>Varisu</option>
+    </select>
+    <input ng-model="booking.date" type="date" required>
+
+    <!-- Custom Directive for Seats -->
+    <seat-selector selected-seats="booking.seats"></seat-selector>
+
+    <button type="submit">{{ editMode ? "Update Booking" : "Book Now" }}</button>
+    <button type="button" ng-click="cancelEdit()" ng-if="editMode">Cancel</button>
+  </form>
+
+  <h3> Booked Tickets</h3>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Movie</th>
+      <th>Date</th>
+      <th>Seats</th>
+      <th>Actions</th>
+    </tr>
+    <tr ng-repeat="b in bookingList">
+      <td>{{b.name}}</td>
+      <td>{{b.email}}</td>
+      <td>{{b.movie}}</td>
+      <td>{{b.date | date:'yyyy-MM-dd'}}</td>
+      <td>{{b.seats.join(', ')}}</td>
+      <td>
+        <button ng-click="editBooking(b)">Edit</button>
+        <button ng-click="deleteBooking(b._id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+  <script src="app.js"></script>
+</body>
+</html>

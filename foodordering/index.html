@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="foodApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Food Ordering System</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body ng-controller="FoodCtrl">
+  <h1> Food Ordering System</h1>
+
+  <div class="filter">
+    <label><input type="radio" ng-model="filterType" value=""> All</label>
+    <label><input type="radio" ng-model="filterType" value="veg"> Veg</label>
+    <label><input type="radio" ng-model="filterType" value="nonveg"> Non-Veg</label>
+  </div>
+
+  <div class="menu">
+    <div class="food-card" ng-repeat="food in foodItems | filter:foodFilter">
+      <img ng-src="{{food.image}}" alt="{{food.name}}">
+      <h3>{{food.name}}</h3>
+      <p>{{food.details}}</p>
+      <p> ₹{{food.price}}</p>
+      <p><strong>{{food.isVeg ? ' Veg' : ' Non-Veg'}}</strong></p>
+      <button ng-click="orderFood(food)">Order Now</button>
+    </div>
+  </div>
+
+  <h2> Your Orders</h2>
+  <ul>
+    <li ng-repeat="o in orders">
+      {{o.name}} ordered {{o.foodItem}} (₹{{o.price}}) — {{o.isVeg ? 'Veg' : 'Non-Veg'}}
+    </li>
+  </ul>
+
+  <script src="app.js"></script>
+</body>
+</html>

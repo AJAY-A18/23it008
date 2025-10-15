@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="musicApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> My Music Playlist</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f9ff;
+      margin: 0;
+      padding: 20px;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #1d4ed8;
+    }
+    form, table {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 700px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #1e3a8a;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover { background-color: #2563eb; }
+    table { 
+      width: 95%; 
+      border-collapse: collapse;
+      text-align: center;
+    }
+    th, td { 
+      border: 1px solid #ccc; 
+      padding: 8px; 
+    }
+    th { 
+      background-color: #1e3a8a; 
+      color: white; 
+    }
+  </style>
+</head>
+
+<body ng-controller="MainCtrl">
+  <h2>🎶 Music Playlist Manager</h2>
+
+  <form ng-submit="saveSong()">
+    <input ng-model="song.title" placeholder="Song Title" required>
+    <input ng-model="song.artist" placeholder="Artist" required>
+    <input ng-model="song.url" placeholder="Audio URL (mp3 link)" required>
+    <button>{{ editMode ? "Update" : "Add Song" }}</button>
+    <button type="button" ng-click="cancelEdit()" ng-if="editMode">Cancel</button>
+  </form>
+
+  <h3>🎧 Playlist</h3>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Controls</th>
+      <th>Actions</th>
+    </tr>
+    <tr ng-repeat="s in songList">
+      <td>{{s.title}}</td>
+      <td>{{s.artist}}</td>
+      <td song-player url="s.url"></td> 
+      <td>
+        <button ng-click="editSong(s)">Edit</button>
+        <button ng-click="deleteSong(s._id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+  <script src="app.js"></script>
+</body>
+</html>

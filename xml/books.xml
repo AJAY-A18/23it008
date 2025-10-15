@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<?xml-stylesheet type="text/xsl" href="books.xsl" ?>
+<books>
+  <book>
+    <title>Harry Potter</title>
+    <author>J.K. Rowling</author>
+    <year>2001</year>
+    <genre>Fantasy</genre>
+  </book>
+  <book>
+    <title>The Hobbit</title>
+    <author>J.R.R. Tolkien</author>
+    <year>1937</year>
+    <genre>Fantasy</genre>
+  </book>
+</books>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      padding: 20px;
+      text-align: center;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      margin: 10px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    input, select {
+      padding: 5px;
+      margin: 5px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      background-color: #93c5fd;
+    }
+  </style>
+</head>
+<body ng-controller="StudentCtrl">
+
+  <h2>🎓 Student Dashboard</h2>
+
+  <div class="card">
+    <h3>Add Student Marks</h3>
+    <input ng-model="student.name" placeholder="Name">
+    <input type="number" ng-model="student.m1" placeholder="Mark 1">
+    <input type="number" ng-model="student.m2" placeholder="Mark 2">
+    <input type="number" ng-model="student.m3" placeholder="Mark 3">
+    <br>
+    <button ng-click="addStudent()">Add</button>
+  </div>
+
+  <div class="card">
+    <h3>Student List</h3>
+    <label>Filter by Grade: </label>
+    <select ng-model="gradeFilter">
+      <option value="">All</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="F">F</option>
+    </select>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Mark 1</th>
+        <th>Mark 2</th>
+        <th>Mark 3</th>
+        <th>Total</th>
+        <th>Grade</th>
+      </tr>
+      <tr ng-repeat="s in students | filter:{grade: gradeFilter}">
+        <td>{{s.name}}</td>
+        <td>{{s.m1}}</td>
+        <td>{{s.m2}}</td>
+        <td>{{s.m3}}</td>
+        <td>{{s.total}}</td>
+        <td>{{s.grade}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

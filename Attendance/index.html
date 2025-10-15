@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="attendanceApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Tracker</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #dbeafe;
+      margin: 0;
+      padding: 20px;
+    }
+    h2, h3 {
+      text-align: center;
+      color: #1e3a8a;
+    }
+    form, table {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 650px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #1e3a8a;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover { 
+      background-color: #3b82f6; 
+    }
+    table { 
+      width: 95%; 
+      border-collapse: collapse;
+      text-align: center;
+     }
+    th, td { 
+      border: 1px solid #ccc; 
+      padding: 8px; 
+    }
+    th { 
+      background-color: #1e3a8a; 
+      color: white; }
+    label, select[ng-model="filterStatus"], select[ng-model='sortOrder'] {
+      display: block;
+      text-align: center;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+
+<body ng-controller="MainCtrl">
+
+  <h2>Student Attendance Tracker</h2>
+
+  <form ng-submit="saveStudent()">
+    <input ng-model="student.name" placeholder="Name" required>
+    <input ng-model="student.roll" placeholder="Roll No" required>
+    <input type="date" ng-model="student.date" required>
+    <select ng-model="student.status" required>
+      <option value="">Select Status</option>
+      <option value="Present">Present</option>
+      <option value="Absent">Absent</option>
+    </select>
+    <button>{{ editMode ? "Update" : "Add" }}</button>
+    <button type="button" ng-click="cancelEdit()" ng-if="editMode">Cancel</button>
+  </form>
+
+  <label>Filter by Status:</label>
+  <select ng-model="filterStatus">
+    <option value="">All</option>
+    <option value="Present">Present</option>
+    <option value="Absent">Absent</option>
+  </select>
+
+  <label>Sort by Name:</label>
+  <select ng-model="sortOrder">
+    <option value="name">A → Z</option>
+    <option value="-name">Z → A</option>
+  </select>
+
+  <h3>Attendance List</h3>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Roll No</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    <tr ng-repeat="a in attendanceList | filter:{status: filterStatus} | orderBy:sortOrder">
+      <td>{{a.name}}</td>
+      <td>{{a.roll}}</td>
+      <td>{{a.date | date:'yyyy-MM-dd'}}</td>
+      <td>{{a.status}}</td>
+      <td>
+        <button ng-click="editStudent(a)">Edit</button>
+        <button ng-click="deleteStudent(a._id)">Delete</button>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Include your AngularJS app file here -->
+  <script src="app.js"></script>
+</body>
+</html>
