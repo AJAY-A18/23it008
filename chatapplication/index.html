@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="chatApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Chat App</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    body { font-family: Arial; background: #f0f4f8; padding: 20px; }
+    h2 { text-align: center; color: #1e3a8a; }
+    form, .chat-list { background: white; padding: 15px; border-radius: 8px; margin: 20px auto; max-width: 600px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+    input, button { padding: 8px; margin: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background-color: #1e3a8a; color: white; cursor: pointer; border: none; }
+    button:hover { background-color: #3b82f6; }
+    .chat-item { border-bottom: 1px solid #ddd; padding: 5px 0; display: flex; justify-content: space-between; align-items: center; }
+    .chat-item:last-child { border-bottom: none; }
+    .time { color: gray; font-size: 0.8em; }
+  </style>
+</head>
+<body ng-controller="ChatCtrl">
+
+  <h2>Simple Chat Application</h2>
+
+  <form ng-submit="sendMessage()">
+    <input ng-model="chat.username" placeholder="Your Name" required>
+    <input ng-model="chat.message" placeholder="Type a message" required>
+    <button>Send</button>
+  </form>
+
+  <div class="chat-list">
+    <div class="chat-item" ng-repeat="c in chatList">
+      <div>
+        <strong>{{c.username}}:</strong> {{c.message}} 
+        <span class="time">({{c.time | date:'HH:mm:ss'}})</span>
+      </div>
+      <button ng-click="deleteMessage(c._id)">🗑️</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
